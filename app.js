@@ -30,7 +30,11 @@
         name: 'Peck',
         mult: 1.1
       },
-    ]
+      {
+        name: 'Quick Attack',
+        mult: 1.1
+      }
+    ];
 
     let party = [
       {
@@ -64,7 +68,7 @@
         name: 'Rattata',
         hp: 15,
         maxhp: 15,
-        moves: [attacks[1]]
+        moves: [attacks[1], attacks[6]]
       },
       {
         name: 'Pidgey',
@@ -78,7 +82,7 @@
         maxhp: 10,
         moves: [attacks[1]]
       }
-    ]
+    ];
 
     $scope.pkmn = party[0];
 
@@ -98,14 +102,25 @@
               mult = $scope.foe.moves[0].mult;
               foeMove = $scope.foe.moves[0].name;
             } else {
-              // TODO: fix, but don't need to worry about until pidgey is used
-              // let foeAttack = Math.floor(Math.random * $scope.foe.moves.length);
-              // console.log($scope.foe.moves.length);
-              // console.log(foeAttack);
+              moveIndex = Math.floor(Math.random() * $scope.foe.moves.length);
+              moveObj = $scope.foe.moves[moveIndex];
+              foeMove = moveObj.name;
+              mult = moveObj.mult;
             }
             takeDmg(mult);
           }
-          $scope.result = $scope.pkmn.name.toUpperCase() + ' used ' + move.name.toUpperCase() + '! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() +'!';
+
+          if ($scope.foe.hp <= 0) {
+            $scope.foe.hp = 0;
+            $scope.result = 'You win!'
+            battleState = false;
+          } else if ($scope.pkmn.hp <= 0) {
+            $scope.pkmn.hp = 0;
+            $scope.result = 'TRAINER whited out!'
+            battleState = false;
+          } else {
+            $scope.result = $scope.pkmn.name.toUpperCase() + ' used ' + move.name.toUpperCase() + '! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() +'!';
+          }
         }
       }
     }
@@ -129,21 +144,11 @@
     function doDmg(mult) {
       $scope.foe.hp -= (atk()*mult);
       $scope.foe.hp = Math.round($scope.foe.hp);
-      if ($scope.foe.hp <= 0) {
-        $scope.foe.hp = 0;
-        $scope.result = 'You win!';
-        battleState = false;
-      }
     }
 
     function takeDmg(mult) {
       $scope.pkmn.hp -= (atk()*mult);
       $scope.pkmn.hp = Math.round($scope.pkmn.hp);
-      if ($scope.pkmn.hp <= 0) {
-        $scope.pkmn.hp = 0;
-        $scope.result = 'TRAINER whited out!';
-        battleState = false;
-      }
     }
 
     function rng() {
