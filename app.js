@@ -7,7 +7,7 @@
 
     const moves = [
       {
-        name: 'Thundershock',
+        name: 'Thunder Shock',
         mult: 1.2
       },
       {
@@ -15,7 +15,7 @@
         mult: 1
       },
       {
-        name: 'Razor Leaf',
+        name: 'Vine Whip',
         mult: 1.2
       },
       {
@@ -84,7 +84,7 @@
 
     $scope.foe = enemies[0];
 
-    $scope.result = '...';
+    $scope.result = '---';
 
     $scope.fight = function() {
       if($scope.foe.hp > 0 && $scope.pkmn.hp > 0 && battleState == true) {
@@ -140,7 +140,7 @@
 todo:
 trainer pkmn objects
 enemy pkmn objects
-moves
+moves/pp
 items
 experience/levels
 

@@ -13,13 +13,13 @@
     <main ng-controller='battleCtrl'>
       <ul>
         <li>Foe stats:</li>
-        <li>{{foe.name}}</li>
+        <li>{{foe.name | uppercase}}</li>
         <li>HP: {{foe.hp}}/{{foe.maxhp}}</li>
       </ul>
 
       <ul>
         <li>Your stats:</li>
-        <li>{{pkmn.name}}</li>
+        <li>{{pkmn.name | uppercase}}</li>
         <li>HP: {{pkmn.hp}}/{{pkmn.maxhp}}</li>
       </ul>
 
