@@ -38,6 +38,9 @@
         <p class='menu-item' ng-show='list' ng-repeat='pkmn in party' ng-click='selectPkmn(pkmn)'>{{pkmn.name}} {{pkmn.hp}}/{{pkmn.maxhp}}</p>
         <li ng-click='run()'>Run</li>
       </ul>
+
+      <button type="button" name="next" ng-show='next' ng-click='nextBattle()'>Next Battle</button>
+      <button type="button" name="button" ng-click='reset()'>Reset</button>
     </main>
   </body>
 </html>

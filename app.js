@@ -90,7 +90,7 @@
 
     $scope.pkmn = $scope.party[0];
 
-    $scope.foe = enemies[0];
+    $scope.foe = enemies[Math.floor(Math.random() * enemies.length)];
 
     $scope.result = {
       trainer: '',
@@ -100,6 +100,7 @@
 
     $scope.fighting = false;
     $scope.list = false;
+    $scope.next = false;
 
     $scope.fight = function() {
       if($scope.foe.hp > 0 && $scope.pkmn.hp > 0 && battleState == true) {
@@ -119,14 +120,16 @@
               system: 'You win!'
             };
             battleState = false;
+            $scope.fighting = false;
+            $scope.next = true;
           } else if ($scope.pkmn.hp <= 0) {
             $scope.pkmn.hp = 0;
 
             if (partyCheck() == true) {
               $scope.result = {
-                trainer: '',
+                trainer: $scope.pkmn.name.toUpperCase() + ' has fainted!',
                 foe: '',
-                system: $scope.pkmn.name.toUpperCase() + ' has fainted! Choose your next Pok\xE9mon:'
+                system: 'Choose your next Pok\xE9mon:'
               };
               $scope.switch();
             } else {
@@ -136,6 +139,7 @@
                 system: 'TRAINER whited out!'
               };
               battleState = false;
+              $scope.fighting = false;
             }
           } else {
             $scope.result = {
@@ -152,7 +156,6 @@
       if (battleState == true) {
         $scope.fighting = false;
         $scope.list = false;
-        console.log(rng());
         if (rng() >= 0.5) {
           $scope.result = {
             trainer: '',
@@ -181,6 +184,7 @@
               foe: $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '!',
               system: 'TRAINER whited out!'
             };
+            $scope.fighting = false;
             battleState = false;
           }
         }
@@ -196,7 +200,12 @@
             $scope.pkmn.active = false;
             pkmn.active = true;
             $scope.pkmn = pkmn;
-            $scope.result = 'Go, ' + pkmn.name.toUpperCase() + '!';
+            $scope.result = {
+              trainer: '',
+              foe: '',
+              system: 'Go, ' + pkmn.name.toUpperCase() + '!'
+            };
+            $scope.list = false;
           } else if (pkmn.hp == 0) {
             $scope.result = {
               trainer: '',
@@ -212,6 +221,27 @@
           }
         }
       }
+    }
+
+    $scope.nextBattle = function() {
+      $scope.foe = enemies[Math.floor(Math.random() * enemies.length)];
+      $scope.foe.hp = $scope.foe.maxhp;
+      $scope.next = false;
+      battleState = true;
+      $scope.result.system = 'A wild ' + $scope.foe.name.toUpperCase() + ' appeared!';
+    }
+
+    $scope.reset = function() {
+      console.log('click');
+      battleState = true;
+      $scope.fighting = false;
+      $scope.list = false;
+
+      $scope.party.forEach(function(pkmn) {
+        pkmn.hp = pkmn.maxhp;
+      });
+
+      $scope.nextBattle();
     }
 
     function atk() {
@@ -256,8 +286,8 @@
         return false;
       }
     }
-  });
 
+  });
 })();
 
 /*
@@ -267,9 +297,10 @@ enemy pkmn objects //made
 moves //made
 pp
 items
-choose next pokemon when fainted
-next encounter
-ux tweak: make result an object so that info can be arranged better
+choose next pokemon when fainted //done
+next encounter //done
+ux tweak: make result an object so that info can be arranged better //done
+ux/ui tweak: stop things from movin around so much
 
 functions:
 fight //made
