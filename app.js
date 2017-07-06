@@ -1,8 +1,7 @@
 (function() {
-
   angular.module('pkmn', [])
-
   .controller('battleCtrl', function($scope) {
+
     let battleState = true;
 
     const attacks = [
@@ -106,6 +105,7 @@
       if($scope.foe.hp > 0 && $scope.pkmn.hp > 0 && battleState == true) {
         $scope.fighting = $scope.fighting ? false : true;
         $scope.list = false;
+
         $scope.selectMove = function(move) {
           doDmg(move.mult);
           if ($scope.foe.hp > 0) {
@@ -156,13 +156,17 @@
       if (battleState == true) {
         $scope.fighting = false;
         $scope.list = false;
+
         if (rng() >= 0.5) {
           $scope.result = {
             trainer: '',
             foe: '',
             system: 'Got away safely!'
           };
+
           battleState = false;
+          $scope.fighting = false;
+          $scope.next = true;
         } else {
           foeAtk();
           if ($scope.pkmn.hp > 0) {
@@ -171,6 +175,7 @@
               foe: $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '!',
               system: ''
             };
+
           } else if (partyCheck() == true && $scope.pkmn.hp <= 0) {
             $scope.result = {
               trainer: 'Couldn\'t get away!',
@@ -232,8 +237,6 @@
     }
 
     $scope.reset = function() {
-      console.log('click');
-      battleState = true;
       $scope.fighting = false;
       $scope.list = false;
 
@@ -292,21 +295,13 @@
 
 /*
 todo:
-trainer pkmn objects //made
-enemy pkmn objects //made
-moves //made
 pp
 items
-choose next pokemon when fainted //done
-next encounter //done
-ux tweak: make result an object so that info can be arranged better //done
 ux/ui tweak: stop things from movin around so much
+QoL: tooooo many if statements
 
 functions:
-fight //made
 bag
-pokemon //made
-run //made
 
 visuals:
 pkmn images/animations
