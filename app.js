@@ -113,8 +113,19 @@
             battleState = false;
           } else if ($scope.pkmn.hp <= 0) {
             $scope.pkmn.hp = 0;
-            $scope.result = 'TRAINER whited out!'
-            battleState = false;
+
+            let partyHp = 0;
+            $scope.party.forEach(function(pkmn) {
+              partyHp += pkmn.hp
+            });
+
+            if (partyHp > 0) {
+              $scope.result = $scope.pkmn.name.toUpperCase() + ' has fainted! Choose your next Pok\xE9mon:'
+              $scope.switch();
+            } else {
+              $scope.result = 'TRAINER whited out!';
+              battleState = false;
+            }
           } else {
             $scope.result = $scope.pkmn.name.toUpperCase() + ' used ' + move.name.toUpperCase() + '! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() +'!';
           }
@@ -203,11 +214,13 @@ enemy pkmn objects //made
 moves //made
 pp
 items
+choose next pokemon when fainted
+next encounter
 
 functions:
 fight //made
 bag
-pokemon
+pokemon //made
 run //made
 
 visuals:
