@@ -14,13 +14,13 @@ main {
 
 ul {
   margin: 0;
-  padding: 0;
+  padding: 5px;
 }
 
 li {
   list-style: none;
 }
 
-li:hover {
+.menu li:hover {
   font-weight: bold;
 }

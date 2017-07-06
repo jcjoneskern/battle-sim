@@ -11,11 +11,23 @@
   <body ng-app='pkmn'>
     <h1>Pokemon battle sim</h1>
     <main ng-controller='battleCtrl'>
-      
-      {{result}}
-      <p>What will TRAINER do?</p>
       <ul>
-        <li>Fight</li>
+        <li>Foe stats:</li>
+        <li>{{foe.name}}</li>
+        <li>HP: {{foe.hp}}/{{foe.maxhp}}</li>
+      </ul>
+
+      <ul>
+        <li>Your stats:</li>
+        <li>{{pkmn.name}}</li>
+        <li>HP: {{pkmn.hp}}/{{pkmn.maxhp}}</li>
+      </ul>
+
+      <p>{{result}}</p>
+
+      <p>What will TRAINER do?</p>
+      <ul class='menu'>
+        <li ng-click='fight()'>Fight</li>
         <li>Bag</li>
         <li>Pok&#233;mon</li>
         <li>Run</li>
