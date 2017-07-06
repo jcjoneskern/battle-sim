@@ -28,6 +28,7 @@
       <p>What will TRAINER do?</p>
       <ul class='menu'>
         <li ng-click='fight()'>Fight</li>
+        <p class='attacks' ng-repeat='move in pkmn.moves' ng-show='fighting' ng-click='selectMove(move)'>{{move.name}}</p>
         <li>Bag</li>
         <li>Pok&#233;mon</li>
         <li ng-click='run()'>Run</li>

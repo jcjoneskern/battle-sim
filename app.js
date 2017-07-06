@@ -5,7 +5,7 @@
   .controller('battleCtrl', function($scope) {
     let battleState = true;
 
-    const moves = [
+    const attacks = [
       {
         name: 'Thunder Shock',
         mult: 1.2
@@ -32,51 +32,51 @@
       },
     ]
 
-    const party = [
+    let party = [
       {
         name: 'Pikachu',
         hp: 20,
         maxhp: 20,
-        moves: [moves[0], moves[1]]
+        moves: [attacks[0], attacks[1]]
       },
       {
         name: 'Bulbasaur',
         hp: 25,
         maxhp: 25,
-        moves: [moves[0], moves[2]]
+        moves: [attacks[0], attacks[2]]
       },
       {
         name: 'Squirtle',
         hp: 25,
         maxhp: 25,
-        moves: [moves[0], moves[4]]
+        moves: [attacks[0], attacks[4]]
       },
       {
         name: 'Charmander',
         hp: 20,
         maxhp: 20,
-        moves: [moves[0], moves[3]]
+        moves: [attacks[0], attacks[3]]
       }
     ];
 
-    const enemies = [
+    let enemies = [
       {
         name: 'Rattata',
         hp: 15,
         maxhp: 15,
-        moves: [moves[0]]
+        moves: [attacks[1]]
       },
       {
         name: 'Pidgey',
         hp: 15,
         maxhp: 15,
-        moves: [moves[0], moves[5]]
+        moves: [attacks[1], attacks[5]]
       },
       {
         name: 'Caterpie',
         hp: 10,
         maxhp: 10,
-        moves: [moves[0]]
+        moves: [attacks[1]]
       }
     ]
 
@@ -86,11 +86,26 @@
 
     $scope.result = '---';
 
+    $scope.fighting = false;
+
     $scope.fight = function() {
       if($scope.foe.hp > 0 && $scope.pkmn.hp > 0 && battleState == true) {
-        doDmg();
-        if ($scope.foe.hp > 0) {
-          takeDmg();
+        $scope.fighting = $scope.fighting ? false : true;
+        $scope.selectMove = function(move) {
+          doDmg(move.mult);
+          if ($scope.foe.hp > 0) {
+            if ($scope.foe.moves.length == 1) {
+              mult = $scope.foe.moves[0].mult;
+              foeMove = $scope.foe.moves[0].name;
+            } else {
+              // TODO: fix, but don't need to worry about until pidgey is used
+              // let foeAttack = Math.floor(Math.random * $scope.foe.moves.length);
+              // console.log($scope.foe.moves.length);
+              // console.log(foeAttack);
+            }
+            takeDmg(mult);
+          }
+          $scope.result = $scope.pkmn.name.toUpperCase() + ' used ' + move.name.toUpperCase() + '! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() +'!';
         }
       }
     }
@@ -111,8 +126,9 @@
       return Math.floor(Math.random() * 5) + 1;
     }
 
-    function doDmg() {
-      $scope.foe.hp -= atk();
+    function doDmg(mult) {
+      $scope.foe.hp -= (atk()*mult);
+      $scope.foe.hp = Math.round($scope.foe.hp);
       if ($scope.foe.hp <= 0) {
         $scope.foe.hp = 0;
         $scope.result = 'You win!';
@@ -120,8 +136,9 @@
       }
     }
 
-    function takeDmg() {
-      $scope.pkmn.hp -= atk();
+    function takeDmg(mult) {
+      $scope.pkmn.hp -= (atk()*mult);
+      $scope.pkmn.hp = Math.round($scope.pkmn.hp);
       if ($scope.pkmn.hp <= 0) {
         $scope.pkmn.hp = 0;
         $scope.result = 'TRAINER whited out!';
@@ -138,17 +155,18 @@
 
 /*
 todo:
-trainer pkmn objects
+trainer pkmn objects //made
 enemy pkmn objects
-moves/pp
+moves //made
+pp
 items
 experience/levels
 
 functions:
-fight
+fight //made
 bag
 pokemon
-run
+run //made
 
 visuals:
 pkmn images/animations
