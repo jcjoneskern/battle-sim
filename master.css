@@ -1,0 +1,26 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+main {
+  width: 50%;
+  background: #fff3cc;
+  border: 3px solid #3287ff;
+  border-radius: 10px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+li:hover {
+  font-weight: bold;
+}

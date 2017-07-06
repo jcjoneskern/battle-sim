@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Pok&#233;mon Battle</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="master.css">
+    <script type="text/javascript" src='angular.min.js'></script>
+    <script type="text/javascript" src='app.js'></script>
+  </head>
+  <body ng-app='pkmn'>
+    <h1>Pokemon battle sim</h1>
+    <main ng-controller='battleCtrl'>
+      
+      {{result}}
+      <p>What will TRAINER do?</p>
+      <ul>
+        <li>Fight</li>
+        <li>Bag</li>
+        <li>Pok&#233;mon</li>
+        <li>Run</li>
+      </ul>
+    </main>
+  </body>
+</html>
