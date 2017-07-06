@@ -7,12 +7,12 @@
 
     const attacks = [
       {
-        name: 'Thunder Shock',
-        mult: 1.2
-      },
-      {
         name: 'Tackle',
         mult: 1
+      },
+      {
+        name: 'Thunder Shock',
+        mult: 1.2
       },
       {
         name: 'Vine Whip',
@@ -72,19 +72,19 @@
         name: 'Rattata',
         hp: 15,
         maxhp: 15,
-        moves: [attacks[1], attacks[6]]
+        moves: [attacks[0], attacks[6]]
       },
       {
         name: 'Pidgey',
         hp: 15,
         maxhp: 15,
-        moves: [attacks[1], attacks[5]]
+        moves: [attacks[0], attacks[5]]
       },
       {
         name: 'Caterpie',
         hp: 10,
         maxhp: 10,
-        moves: [attacks[1]]
+        moves: [attacks[0]]
       }
     ];
 
@@ -100,6 +100,7 @@
     $scope.fight = function() {
       if($scope.foe.hp > 0 && $scope.pkmn.hp > 0 && battleState == true) {
         $scope.fighting = $scope.fighting ? false : true;
+        $scope.list = false;
         $scope.selectMove = function(move) {
           doDmg(move.mult);
           if ($scope.foe.hp > 0) {
@@ -123,6 +124,8 @@
 
     $scope.run = function() {
       if (battleState == true) {
+        $scope.fighting = false;
+        $scope.list = false;
         console.log(rng());
         if (rng() >= 0.5) {
           $scope.result = 'Got away safely!'
@@ -143,8 +146,18 @@
     $scope.switch = function() {
       if (battleState == true) {
         $scope.list = $scope.list ? false : true;
+        $scope.fighting = false;
         $scope.selectPkmn = function(pkmn) {
-          console.log(pkmn);
+          if (pkmn.active == false && pkmn.hp != 0) {
+            $scope.pkmn.active = false;
+            pkmn.active = true;
+            $scope.pkmn = pkmn;
+            $scope.result = 'Go, ' + pkmn.name.toUpperCase() + '!';
+          } else if (pkmn.hp == 0) {
+            $scope.result = pkmn.name.toUpperCase() + ' is unable to battle!'
+          } else {
+            $scope.result = pkmn.name.toUpperCase() + ' is already in battle!';
+          }
         }
       }
     }
