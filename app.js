@@ -36,30 +36,34 @@
       }
     ];
 
-    let party = [
+    $scope.party = [
       {
         name: 'Pikachu',
         hp: 20,
         maxhp: 20,
-        moves: [attacks[0], attacks[1]]
+        moves: [attacks[0], attacks[1]],
+        active: true
       },
       {
         name: 'Bulbasaur',
         hp: 25,
         maxhp: 25,
-        moves: [attacks[0], attacks[2]]
+        moves: [attacks[0], attacks[2]],
+        active: false
       },
       {
         name: 'Squirtle',
         hp: 25,
         maxhp: 25,
-        moves: [attacks[0], attacks[4]]
+        moves: [attacks[0], attacks[4]],
+        active: false
       },
       {
         name: 'Charmander',
         hp: 20,
         maxhp: 20,
-        moves: [attacks[0], attacks[3]]
+        moves: [attacks[0], attacks[3]],
+        active: false
       }
     ];
 
@@ -84,13 +88,14 @@
       }
     ];
 
-    $scope.pkmn = party[0];
+    $scope.pkmn = $scope.party[0];
 
     $scope.foe = enemies[0];
 
-    $scope.result = '---';
+    $scope.result = 'A wild ' + $scope.foe.name.toUpperCase() + ' appeared!';
 
     $scope.fighting = false;
+    $scope.list = false;
 
     $scope.fight = function() {
       if($scope.foe.hp > 0 && $scope.pkmn.hp > 0 && battleState == true) {
@@ -98,16 +103,7 @@
         $scope.selectMove = function(move) {
           doDmg(move.mult);
           if ($scope.foe.hp > 0) {
-            if ($scope.foe.moves.length == 1) {
-              mult = $scope.foe.moves[0].mult;
-              foeMove = $scope.foe.moves[0].name;
-            } else {
-              moveIndex = Math.floor(Math.random() * $scope.foe.moves.length);
-              moveObj = $scope.foe.moves[moveIndex];
-              foeMove = moveObj.name;
-              mult = moveObj.mult;
-            }
-            takeDmg(mult);
+            foeAtk();
           }
 
           if ($scope.foe.hp <= 0) {
@@ -127,12 +123,28 @@
 
     $scope.run = function() {
       if (battleState == true) {
-        if (rng() >= 0.75) {
+        console.log(rng());
+        if (rng() >= 0.5) {
           $scope.result = 'Got away safely!'
           battleState = false;
         } else {
-          $scope.result = 'Couldn\'t get away!'
-          takeDmg();
+          foeAtk();
+          console.log(foeMove);
+          if ($scope.pkmn.hp > 0) {
+            $scope.result = 'Couldn\'t get away! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '!';
+          } else {
+            $scope.result = 'Couldn\'t get away! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '! TRAINER whited out!';
+            battleState = false;
+          }
+        }
+      }
+    }
+
+    $scope.switch = function() {
+      if (battleState == true) {
+        $scope.list = $scope.list ? false : true;
+        $scope.selectPkmn = function(pkmn) {
+          console.log(pkmn);
         }
       }
     }
@@ -151,6 +163,19 @@
       $scope.pkmn.hp = Math.round($scope.pkmn.hp);
     }
 
+    function foeAtk() {
+      if ($scope.foe.moves.length == 1) {
+        mult = $scope.foe.moves[0].mult;
+        foeMove = $scope.foe.moves[0].name;
+      } else {
+        moveIndex = Math.floor(Math.random() * $scope.foe.moves.length);
+        moveObj = $scope.foe.moves[moveIndex];
+        foeMove = moveObj.name;
+        mult = moveObj.mult;
+      }
+      takeDmg(mult);
+    }
+
     function rng() {
       return Math.random().toFixed(2);
     }
@@ -161,11 +186,10 @@
 /*
 todo:
 trainer pkmn objects //made
-enemy pkmn objects
+enemy pkmn objects //made
 moves //made
 pp
 items
-experience/levels
 
 functions:
 fight //made
@@ -178,6 +202,7 @@ pkmn images/animations
 health bars
 
 gettin fancy:
+experience/levels
 status
 effectiveness/types
 accuracy

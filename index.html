@@ -28,9 +28,10 @@
       <p>What will TRAINER do?</p>
       <ul class='menu'>
         <li ng-click='fight()'>Fight</li>
-        <p class='attacks' ng-repeat='move in pkmn.moves' ng-show='fighting' ng-click='selectMove(move)'>{{move.name}}</p>
+        <p class='menu-item' ng-repeat='move in pkmn.moves' ng-show='fighting' ng-click='selectMove(move)'>{{move.name}}</p>
         <li>Bag</li>
-        <li>Pok&#233;mon</li>
+        <li ng-click='switch()'>Pok&#233;mon</li>
+        <p class='menu-item' ng-show='list' ng-repeat='pkmn in party' ng-click='selectPkmn(pkmn)'>{{pkmn.name}} {{pkmn.hp}}/{{pkmn.maxhp}}</p>
         <li ng-click='run()'>Run</li>
       </ul>
     </main>
