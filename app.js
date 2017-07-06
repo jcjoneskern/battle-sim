@@ -114,12 +114,7 @@
           } else if ($scope.pkmn.hp <= 0) {
             $scope.pkmn.hp = 0;
 
-            let partyHp = 0;
-            $scope.party.forEach(function(pkmn) {
-              partyHp += pkmn.hp
-            });
-
-            if (partyHp > 0) {
+            if (partyCheck() == true) {
               $scope.result = $scope.pkmn.name.toUpperCase() + ' has fainted! Choose your next Pok\xE9mon:'
               $scope.switch();
             } else {
@@ -143,9 +138,11 @@
           battleState = false;
         } else {
           foeAtk();
-          console.log(foeMove);
           if ($scope.pkmn.hp > 0) {
             $scope.result = 'Couldn\'t get away! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '!';
+          } else if (partyCheck() == true && $scope.pkmn.hp <= 0) {
+            $scope.result = 'Couldn\'t get away! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '! ' + $scope.pkmn.name.toUpperCase() + ' has fainted! Choose your next Pok\xE9mon:';
+            $scope.switch();
           } else {
             $scope.result = 'Couldn\'t get away! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '! TRAINER whited out!';
             battleState = false;
@@ -203,6 +200,18 @@
     function rng() {
       return Math.random().toFixed(2);
     }
+
+    function partyCheck() {
+      let partyHp = 0;
+      $scope.party.forEach(function(pkmn) {
+        partyHp += pkmn.hp
+      });
+      if (partyHp > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   });
 
 })();
@@ -216,6 +225,7 @@ pp
 items
 choose next pokemon when fainted
 next encounter
+ux tweak: make result an object so that info can be arranged better
 
 functions:
 fight //made
