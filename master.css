@@ -33,3 +33,12 @@ li {
 .menu-item:hover {
   font-style: italic;
 }
+
+.message p{
+  margin: 0;
+  padding: 0;
+}
+
+.message {
+  margin: 1em auto;
+}

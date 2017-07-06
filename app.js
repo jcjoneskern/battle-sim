@@ -92,7 +92,11 @@
 
     $scope.foe = enemies[0];
 
-    $scope.result = 'A wild ' + $scope.foe.name.toUpperCase() + ' appeared!';
+    $scope.result = {
+      trainer: '',
+      foe: '',
+      system: 'A wild ' + $scope.foe.name.toUpperCase() + ' appeared!'
+    };
 
     $scope.fighting = false;
     $scope.list = false;
@@ -109,20 +113,36 @@
 
           if ($scope.foe.hp <= 0) {
             $scope.foe.hp = 0;
-            $scope.result = 'You win!'
+            $scope.result = {
+              trainer: '',
+              foe: '',
+              system: 'You win!'
+            };
             battleState = false;
           } else if ($scope.pkmn.hp <= 0) {
             $scope.pkmn.hp = 0;
 
             if (partyCheck() == true) {
-              $scope.result = $scope.pkmn.name.toUpperCase() + ' has fainted! Choose your next Pok\xE9mon:'
+              $scope.result = {
+                trainer: '',
+                foe: '',
+                system: $scope.pkmn.name.toUpperCase() + ' has fainted! Choose your next Pok\xE9mon:'
+              };
               $scope.switch();
             } else {
-              $scope.result = 'TRAINER whited out!';
+              $scope.result = {
+                trainer: '',
+                foe: '',
+                system: 'TRAINER whited out!'
+              };
               battleState = false;
             }
           } else {
-            $scope.result = $scope.pkmn.name.toUpperCase() + ' used ' + move.name.toUpperCase() + '! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() +'!';
+            $scope.result = {
+              trainer: $scope.pkmn.name.toUpperCase() + ' used ' + move.name.toUpperCase() + '!',
+              foe: $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() +'!',
+              system: ''
+            };
           }
         }
       }
@@ -134,17 +154,33 @@
         $scope.list = false;
         console.log(rng());
         if (rng() >= 0.5) {
-          $scope.result = 'Got away safely!'
+          $scope.result = {
+            trainer: '',
+            foe: '',
+            system: 'Got away safely!'
+          };
           battleState = false;
         } else {
           foeAtk();
           if ($scope.pkmn.hp > 0) {
-            $scope.result = 'Couldn\'t get away! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '!';
+            $scope.result = {
+              trainer: 'Couldn\'t get away!',
+              foe: $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '!',
+              system: ''
+            };
           } else if (partyCheck() == true && $scope.pkmn.hp <= 0) {
-            $scope.result = 'Couldn\'t get away! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '! ' + $scope.pkmn.name.toUpperCase() + ' has fainted! Choose your next Pok\xE9mon:';
+            $scope.result = {
+              trainer: 'Couldn\'t get away!',
+              foe: $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '!',
+              system: $scope.pkmn.name.toUpperCase() + ' has fainted! Choose your next Pok\xE9mon:'
+            };
             $scope.switch();
           } else {
-            $scope.result = 'Couldn\'t get away! ' + $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '! TRAINER whited out!';
+            $scope.result = {
+              trainer: 'Couldn\'t get away!',
+              foe: $scope.foe.name.toUpperCase() + ' used ' + foeMove.toUpperCase() + '!',
+              system: 'TRAINER whited out!'
+            };
             battleState = false;
           }
         }
@@ -162,9 +198,17 @@
             $scope.pkmn = pkmn;
             $scope.result = 'Go, ' + pkmn.name.toUpperCase() + '!';
           } else if (pkmn.hp == 0) {
-            $scope.result = pkmn.name.toUpperCase() + ' is unable to battle!'
+            $scope.result = {
+              trainer: '',
+              foe: '',
+              system: pkmn.name.toUpperCase() + ' is unable to battle!'
+            };
           } else {
-            $scope.result = pkmn.name.toUpperCase() + ' is already in battle!';
+            $scope.result = {
+              trainer: '',
+              foe: '',
+              system: pkmn.name.toUpperCase() + ' is already in battle!'
+            };
           }
         }
       }
