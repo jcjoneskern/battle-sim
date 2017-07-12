@@ -12,6 +12,20 @@ main {
   padding: 20px;
 }
 
+#battle-display {
+  width: 50%;
+  float: left;
+}
+
+#actions {
+  width: 50%;
+  float: right;
+}
+
+.clearfix {
+  clear: both;
+}
+
 ul {
   margin: 0;
   padding: 5px;

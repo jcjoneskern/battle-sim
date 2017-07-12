@@ -11,33 +11,39 @@
   <body ng-app='pkmn'>
     <h1>Pokemon battle sim</h1>
     <main ng-controller='battleCtrl'>
-      <ul>
-        <li>Foe stats:</li>
-        <li>{{foe.name | uppercase}}</li>
-        <li>HP: {{foe.hp}}/{{foe.maxhp}}</li>
-      </ul>
+      <section id='battle-display'>
+        <ul>
+          <li>Foe stats:</li>
+          <li>{{foe.name | uppercase}}</li>
+          <li>HP: {{foe.hp}}/{{foe.maxhp}}</li>
+        </ul>
 
-      <ul>
-        <li>Your stats:</li>
-        <li>{{pkmn.name | uppercase}}</li>
-        <li>HP: {{pkmn.hp}}/{{pkmn.maxhp}}</li>
-      </ul>
+        <ul>
+          <li>Your stats:</li>
+          <li>{{pkmn.name | uppercase}}</li>
+          <li>HP: {{pkmn.hp}}/{{pkmn.maxhp}}</li>
+        </ul>
+
+      </section>
+
+      <section id='actions'>
+        <p>What will TRAINER do?</p>
+        <ul class='menu'>
+          <li ng-click='fight()'>Fight</li>
+          <p class='menu-item' ng-repeat='move in pkmn.moves' ng-show='fighting' ng-click='selectMove(move)'>{{move.name}}</p>
+          <!-- <li>Bag</li> -->
+          <li ng-click='switch()'>Pok&#233;mon</li>
+          <p class='menu-item' ng-show='list' ng-repeat='pkmn in party' ng-click='selectPkmn(pkmn)'>{{pkmn.name}} {{pkmn.hp}}/{{pkmn.maxhp}}</p>
+          <li ng-click='run()'>Run</li>
+        </ul>
+      </section>
+      <div class="clearfix"></div>
 
       <section class='message'>
         <p>{{result.trainer}}</p>
         <p>{{result.foe}}</p>
         <p>{{result.system}}</p>
       </section>
-
-      <p>What will TRAINER do?</p>
-      <ul class='menu'>
-        <li ng-click='fight()'>Fight</li>
-        <p class='menu-item' ng-repeat='move in pkmn.moves' ng-show='fighting' ng-click='selectMove(move)'>{{move.name}}</p>
-        <!-- <li>Bag</li> -->
-        <li ng-click='switch()'>Pok&#233;mon</li>
-        <p class='menu-item' ng-show='list' ng-repeat='pkmn in party' ng-click='selectPkmn(pkmn)'>{{pkmn.name}} {{pkmn.hp}}/{{pkmn.maxhp}}</p>
-        <li ng-click='run()'>Run</li>
-      </ul>
 
       <button type="button" name="next" ng-show='next' ng-click='nextBattle()'>Next Battle</button>
       <button type="button" name="button" ng-click='reset()'>Reset</button>

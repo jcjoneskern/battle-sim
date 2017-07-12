@@ -2,93 +2,44 @@
   angular.module('pkmn', [])
   .controller('battleCtrl', function($scope) {
 
-    let battleState = true;
-
-    const attacks = [
-      {
-        name: 'Tackle',
-        mult: 1
-      },
-      {
-        name: 'Thunder Shock',
-        mult: 1.2
-      },
-      {
-        name: 'Vine Whip',
-        mult: 1.2
-      },
-      {
-        name: 'Ember',
-        mult: 1.2
-      },
-      {
-        name: 'Bubble',
-        mult: 1.2
-      },
-      {
-        name: 'Peck',
-        mult: 1.1
-      },
-      {
-        name: 'Quick Attack',
-        mult: 1.1
+    class Move {
+      constructor(name, mult) {
+        this.name = name;
+        this.mult = mult;
       }
-    ];
+    }
 
-    $scope.party = [
-      {
-        name: 'Pikachu',
-        hp: 20,
-        maxhp: 20,
-        moves: [attacks[0], attacks[1]],
-        active: true
-      },
-      {
-        name: 'Bulbasaur',
-        hp: 25,
-        maxhp: 25,
-        moves: [attacks[0], attacks[2]],
-        active: false
-      },
-      {
-        name: 'Squirtle',
-        hp: 25,
-        maxhp: 25,
-        moves: [attacks[0], attacks[4]],
-        active: false
-      },
-      {
-        name: 'Charmander',
-        hp: 20,
-        maxhp: 20,
-        moves: [attacks[0], attacks[3]],
-        active: false
+    class Pkmn {
+      constructor(name, hp, maxhp, moves, active) {
+        this.name = name;
+        this.hp = hp;
+        this.maxhp = maxhp;
+        this.moves = moves;
+        this.active = active;
       }
-    ];
+    }
 
-    let enemies = [
-      {
-        name: 'Rattata',
-        hp: 15,
-        maxhp: 15,
-        moves: [attacks[0], attacks[6]]
-      },
-      {
-        name: 'Pidgey',
-        hp: 15,
-        maxhp: 15,
-        moves: [attacks[0], attacks[5]]
-      },
-      {
-        name: 'Caterpie',
-        hp: 10,
-        maxhp: 10,
-        moves: [attacks[0]]
-      }
-    ];
+    const tackle = new Move('Tackle', 1);
+    const thunderShock = new Move('Thunder Shock', 1.2);
+    const vineWhip = new Move('Vine Whip', 1.2);
+    const bubble = new Move('Bubble', 1.2);
+    const ember = new Move('Ember', 1.2);
+    const peck = new Move('Peck', 1.1);
+    const quickAttack = new Move('Quick Attack', 1.1);
+
+    const pikachu = new Pkmn('Pikachu', 20, 20, [tackle, thunderShock], true);
+    const bulbasaur = new Pkmn('Bulbasaur', 25, 25, [tackle, vineWhip], false);
+    const squirtle = new Pkmn('Squirtle', 25, 25, [tackle, bubble], false);
+    const charmander = new Pkmn('Charmander', 20, 20, [tackle, ember], false);
+
+    const rattata = new Pkmn('Rattata', 15, 15, [tackle, quickAttack], false);
+    const pidgey = new Pkmn('Pidgey', 15, 15, [tackle, peck], false);
+    const caterpie = new Pkmn('Caterpie', 10, 10, [tackle], false);
+
+    $scope.party = [pikachu, bulbasaur, squirtle, charmander];
+    let enemies = [rattata, pidgey, caterpie];
 
     $scope.pkmn = $scope.party[0];
-
     $scope.foe = enemies[Math.floor(Math.random() * enemies.length)];
 
     $scope.result = {
@@ -97,6 +48,7 @@
       system: 'A wild ' + $scope.foe.name.toUpperCase() + ' appeared!'
     };
 
+    let battleState = true;
     $scope.fighting = false;
     $scope.list = false;
     $scope.next = false;
